@@ -25,10 +25,17 @@ namespace MyMarkParser
                 {
                     var tempLine = new StringBuilder();
                     var emFlag = false;
+                    char previousLetter = ' ';
                     foreach (var letter in line)
                     {
                         if (letter == '_')
-                            if (!emFlag)
+                        {
+                            if (previousLetter == '\\')
+                            {
+                                tempLine.Remove(tempLine.Length - 1, 1);
+                                tempLine.Append(letter);
+                            }
+                            else if (!emFlag)
                             {
                                 tempLine.Append("<em>");
                                 emFlag = true;
@@ -38,10 +45,12 @@ namespace MyMarkParser
                                 tempLine.Append("</em>");
                                 emFlag = false;
                             }
+                        }
                         else
                         {
                             tempLine.Append(letter);
                         }
+                        previousLetter = letter;
                     }
                     answer.Add(tempLine.ToString());
                 }

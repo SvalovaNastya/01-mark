@@ -62,6 +62,18 @@ namespace MyMarkParser
             var result = MarkParser.ParseMarkToHtml(new string[] { "_aaa _aaa_ aaa_", "", "uu ll _d_ ss" });
             Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em>aaa </em>aaa<em> aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
         }
+        [Test]
+        public static void StringWithoutTagEmOnSlesh()
+        {
+            var result = MarkParser.ParseMarkToHtml(new string[] { @"_aaa \_aaa\_ aaa_", "", "uu ll _d_ ss" });
+            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em>aaa _aaa_ aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
+        }
+        [Test]
+        public static void StringWithOnlySlesh()
+        {
+            var result = MarkParser.ParseMarkToHtml(new string[] { @"_aaa \aaa aaa_", "", "uu ll _d_ ss" });
+            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", @"<em>aaa \aaa aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
+        }
     }
 
 }
