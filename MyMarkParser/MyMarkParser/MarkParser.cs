@@ -10,7 +10,24 @@ namespace MyMarkParser
     {
         public static string[] ParseMarkToHtml(string[] lines)
         {
-            throw new Exception();
+            if (lines.Length == 0)
+                return new string[1] {""};
+            var answer = new List<string>();
+            answer.Add("<p>");
+            foreach (var e in lines)
+            {
+                if (e == "")
+                {
+                    answer.Add("</p>");
+                    answer.Add("<p>");
+                }
+                else
+                {
+                    answer.Add(e);
+                }
+            }
+            answer.Add("</p>");
+            return answer.ToArray();
         }
     }
 }
