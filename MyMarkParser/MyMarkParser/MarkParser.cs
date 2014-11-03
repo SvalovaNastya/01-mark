@@ -14,16 +14,36 @@ namespace MyMarkParser
                 return new string[1] {""};
             var answer = new List<string>();
             answer.Add("<p>");
-            foreach (var e in lines)
+            foreach (var line in lines)
             {
-                if (e == "")
+                if (line == "")
                 {
                     answer.Add("</p>");
                     answer.Add("<p>");
                 }
                 else
                 {
-                    answer.Add(e);
+                    var tempLine = new StringBuilder();
+                    var emFlag = false;
+                    foreach (var letter in line)
+                    {
+                        if (letter == '_')
+                            if (!emFlag)
+                            {
+                                tempLine.Append("<em>");
+                                emFlag = true;
+                            }
+                            else
+                            {
+                                tempLine.Append("</em>");
+                                emFlag = false;
+                            }
+                        else
+                        {
+                            tempLine.Append(letter);
+                        }
+                    }
+                    answer.Add(tempLine.ToString());
                 }
             }
             answer.Add("</p>");

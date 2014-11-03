@@ -44,6 +44,24 @@ namespace MyMarkParser
             var result = MarkParser.ParseMarkToHtml(new string[] { "aaa", "", "uu" });
             Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "aaa", "</p>", "<p>", "uu", "</p>" }));
         }
+        [Test]
+        public static void StringWithTagEm()
+        {
+            var result = MarkParser.ParseMarkToHtml(new string[] { "_aaa_", "", "uu ll _d_ ss" });
+            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em>aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
+        }
+        [Test]
+        public static void StringWithEmptyTagEm()
+        {
+            var result = MarkParser.ParseMarkToHtml(new string[] { "__", "", "uu ll _d_ ss" });
+            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em></em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
+        }
+        [Test]
+        public static void StringWithDoubleTagEm()
+        {
+            var result = MarkParser.ParseMarkToHtml(new string[] { "_aaa _aaa_ aaa_", "", "uu ll _d_ ss" });
+            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em>aaa </em>aaa<em> aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
+        }
     }
 
 }
