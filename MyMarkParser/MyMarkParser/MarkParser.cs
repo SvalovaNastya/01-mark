@@ -23,40 +23,50 @@ namespace MyMarkParser
                 }
                 else
                 {
-                    var tempLine = new StringBuilder();
-                    var emFlag = false;
-                    char previousLetter = ' ';
-                    foreach (var letter in line)
-                    {
-                        if (letter == '_')
-                        {
-                            if (previousLetter == '\\')
-                            {
-                                tempLine.Remove(tempLine.Length - 1, 1);
-                                tempLine.Append(letter);
-                            }
-                            else if (!emFlag)
-                            {
-                                tempLine.Append("<em>");
-                                emFlag = true;
-                            }
-                            else
-                            {
-                                tempLine.Append("</em>");
-                                emFlag = false;
-                            }
-                        }
-                        else
-                        {
-                            tempLine.Append(letter);
-                        }
-                        previousLetter = letter;
-                    }
-                    answer.Add(tempLine.ToString());
+                    ParseEachLine(answer, line);
                 }
             }
             answer.Add("</p>");
             return answer.ToArray();
+        }
+
+        private static void ParseEachLine(List<string> answer, string line)
+        {
+            var newLine = new StringBuilder();
+            var emFlag = false;
+            char previousLetter = ' ';
+            foreach (var letter in line)
+            {
+                if (letter == '_')
+                {
+                    emFlag = CorrectAddTag(newLine, emFlag, previousLetter, letter);
+                }
+                else
+                {
+                    newLine.Append(letter);
+                }
+                previousLetter = letter;
+            }
+            answer.Add(newLine.ToString());
+        }
+
+        static bool AddEmTag(bool emFlag, StringBuilder line)
+        {
+            var tag = (!emFlag) ? "<em>" : "</em>";
+            line.Append(tag);
+            return !emFlag;
+        }
+
+        private static bool CorrectAddTag(StringBuilder newLine, bool emFlag, char previousLetter, char letter)
+        {
+            if (previousLetter == '\\')
+            {
+                newLine.Remove(newLine.Length - 1, 1);
+                newLine.Append(letter);
+            }
+            else
+                emFlag = AddEmTag(emFlag, newLine);
+            return emFlag;
         }
     }
 }
