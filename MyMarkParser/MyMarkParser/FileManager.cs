@@ -8,7 +8,7 @@ namespace MyMarkParser
 {
     public class FileManager
     {
-        public static string[] ReadFromFiles(string inputFilename)
+        public static string ReadFromFiles(string inputFilename)
         {
             throw new Exception();
         }

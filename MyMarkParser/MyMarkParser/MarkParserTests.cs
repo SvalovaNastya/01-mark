@@ -23,56 +23,74 @@ namespace MyMarkParser
         [Test]
         public static void EmptyStringOnEmptyString()
         {
-            var result = MarkParser.ParseMarkToHtml(new string[0]);
-            Assert.IsTrue(CompareArrays(result, new string[] {""}));
+            var result = MarkParser.ParseMarkToHtml("");
+            Assert.AreEqual(result, "");
         }
         [Test]
         public static void ThisStringsOnStringsWithoutSpesialSymbols()
         {
-            var result = MarkParser.ParseMarkToHtml(new string[] {"aaa", "rrr eee, ee", "ppp"});
-            Assert.IsTrue(CompareArrays(result, new string[] {"<p>", "aaa", "rrr eee, ee", "ppp", "</p>"}));
+            var result = MarkParser.ParseMarkToHtml("aaa\nrrr eee, ee\nppp");
+            Assert.AreEqual("<p>\naaa\nrrr eee, ee\nppp\n</p>", result);
+        }
+        [Test]
+        public static void StringWithOnlyOneNoSpecialSymbol()
+        {
+            var result = MarkParser.ParseMarkToHtml("_a_");
+            Assert.AreEqual("<p>\n<em>a</em>\n</p>", result);
         }
         [Test]
         public static void ThisStringOnStringWithoutSpesialSymbols()
         {
-            var result = MarkParser.ParseMarkToHtml(new string[] {"aaa, kkk 'dd' pp . 422%"});
-            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "aaa, kkk 'dd' pp . 422%", "</p>" }));
+            var result = MarkParser.ParseMarkToHtml("aaa, kkk 'dd' pp . 422%");
+            Assert.AreEqual("<p>\naaa, kkk 'dd' pp . 422%\n</p>", result);
         }
         [Test]
         public static void StringWithTagP()
         {
-            var result = MarkParser.ParseMarkToHtml(new string[] { "aaa", "", "uu" });
-            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "aaa", "</p>", "<p>", "uu", "</p>" }));
+            var result = MarkParser.ParseMarkToHtml("aaa\n\nuu");
+            Assert.AreEqual("<p>\naaa\n</p>\n<p>\nuu\n</p>", result);
         }
         [Test]
         public static void StringWithTagEm()
         {
-            var result = MarkParser.ParseMarkToHtml(new string[] { "_aaa_", "", "uu ll _d_ ss" });
-            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em>aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
-        }
-        [Test]
-        public static void StringWithEmptyTagEm()
-        {
-            var result = MarkParser.ParseMarkToHtml(new string[] { "__", "", "uu ll _d_ ss" });
-            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em></em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
-        }
+            var result = MarkParser.ParseMarkToHtml("_aaa_\n\nuu ll _d_ ss" );
+            Assert.AreEqual("<p>\n<em>aaa</em>\n</p>\n<p>\nuu ll <em>d</em> ss\n</p>", result);
+        }//здесь был неверный пример
         [Test]
         public static void StringWithDoubleTagEm()
         {
-            var result = MarkParser.ParseMarkToHtml(new string[] { "_aaa _aaa_ aaa_", "", "uu ll _d_ ss" });
-            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em>aaa </em>aaa<em> aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
+            var result = MarkParser.ParseMarkToHtml("_aaa _aaa_ aaa_\n\nuu ll _d_ ss");
+            Assert.AreEqual("<p>\n<em>aaa </em>aaa<em> aaa</em>\n</p>\n<p>\nuu ll <em>d</em> ss\n</p>", result);
         }
         [Test]
         public static void StringWithoutTagEmOnSlesh()
         {
-            var result = MarkParser.ParseMarkToHtml(new string[] { @"_aaa \_aaa\_ aaa_", "", "uu ll _d_ ss" });
-            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", "<em>aaa _aaa_ aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
+            var result = MarkParser.ParseMarkToHtml("_aaa \\_aaa\\_ aaa_\n\nuu ll _d_ ss");
+            Assert.AreEqual("<p>\n<em>aaa _aaa_ aaa</em>\n</p>\n<p>\nuu ll <em>d</em> ss\n</p>", result);
         }
         [Test]
         public static void StringWithOnlySlesh()
         {
-            var result = MarkParser.ParseMarkToHtml(new string[] { @"_aaa \aaa aaa_", "", "uu ll _d_ ss" });
-            Assert.IsTrue(CompareArrays(result, new string[] { "<p>", @"<em>aaa \aaa aaa</em>", "</p>", "<p>", "uu ll <em>d</em> ss", "</p>" }));
+            var result = MarkParser.ParseMarkToHtml( "_aaa \\aaa aaa_\n\nuu ll _d_ ss" );
+            Assert.AreEqual("<p>\n<em>aaa aaa aaa</em>\n</p>\n<p>\nuu ll <em>d</em> ss\n</p>", result );
+        }
+        [Test]
+        public static void StringWithStrongTagInOneLine()
+        {
+            var result = MarkParser.ParseMarkToHtml( "__aaa__" );
+            Assert.AreEqual("<p>\n<strong>aaa</strong>\n</p>", result);
+        }
+        [Test]
+        public static void StringWithStrongTagInManyLines()
+        {
+            var result = MarkParser.ParseMarkToHtml( "__aaa__\n\npp __ o__" );
+            Assert.AreEqual("<p>\n<strong>aaa</strong>\n</p>\n<p>\npp <strong> o</strong>\n</p>", result );
+        }
+        [Test]
+        public static void StringWithEmptyStrongTag()
+        {
+            var result = MarkParser.ParseMarkToHtml( "____aa" );
+            Assert.AreEqual("<p>\n<strong></strong>aa\n</p>", result);
         }
     }
 
