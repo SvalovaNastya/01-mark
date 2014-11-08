@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkParser", "MarkParser\MarkParser.csproj", "{5C3056C1-311C-4D8B-8BE6-190239555EC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkParserTests", "MarkParserTests\MarkParserTests.csproj", "{566F197C-87EF-45F6-B66E-26C3769A4E07}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C3056C1-311C-4D8B-8BE6-190239555EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C3056C1-311C-4D8B-8BE6-190239555EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C3056C1-311C-4D8B-8BE6-190239555EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C3056C1-311C-4D8B-8BE6-190239555EC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{566F197C-87EF-45F6-B66E-26C3769A4E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{566F197C-87EF-45F6-B66E-26C3769A4E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{566F197C-87EF-45F6-B66E-26C3769A4E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{566F197C-87EF-45F6-B66E-26C3769A4E07}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
