@@ -6,9 +6,57 @@ using System.Threading.Tasks;
 
 namespace MarkToHtml
 {
+    public class TaggedText
+    {
+        public string Text { get; set; }
+        public string Tag { get; set; }
+
+        public TaggedText(string text, string tag)
+        {
+            this.Tag = tag;
+            this.Text = text;
+        }
+
+        public string ToHtmlString()
+        {
+            if (Tag == null)
+                return Text;
+            var s = new StringBuilder();
+            s.Append("<" + Tag + ">");
+            s.Append(Text);
+            s.Append("</" + Tag + ">");
+            return s.ToString();
+        }
+    }
+
+    public class Paragraph
+    {
+        public List<TaggedText> TaggedTextsList { get; set; }
+
+        public Paragraph(string rawText)
+        {
+            TaggedTextsList = ParseParagraph(rawText);
+        }
+
+        public List<TaggedText> ParseParagraph(string text)
+        {
+            return new List<TaggedText>(){new TaggedText(text, null)};
+        }
+
+        public string ToHtmlString()
+        {
+            var s = new StringBuilder();
+            s.Append("<p>\n");
+            foreach (var taggedText in TaggedTextsList)
+                s.Append(taggedText.ToHtmlString());
+            s.Append("\n</p>");
+            return s.ToString();
+        }
+    }
+
     public class MarkParser
     {
-        public static string[] DividesIntoParagrafs(string text)
+        public static string[] DividesIntoParagraphs(string text)
         {
             var ans = new List<String>();
             int start = 0;
@@ -36,17 +84,16 @@ namespace MarkToHtml
 
         public static string Parse(string text)
         {
-            var paragrafs = DividesIntoParagrafs(text);
+            var paragraphs = DividesIntoParagraphs(text)
+                .Select(x => new Paragraph(x))
+                .ToArray();
             var answer = new StringBuilder();
-            foreach (var paragraf in paragrafs)
+            foreach (var paragraph in paragraphs)
             {
-                answer.Append("<p>\n");
-                answer.Append(paragraf);
-                answer.Append("\n</p>\n");
+                answer.Append(paragraph.ToHtmlString());
+                answer.Append("\n");
             }
-            if (paragrafs.Length == 0)
-                answer.Append("<p>\n\n</p>");
-            else
+            if (answer.Length > 0)
                 answer.Remove(answer.Length - 1, 1);
             return answer.ToString();
         }
