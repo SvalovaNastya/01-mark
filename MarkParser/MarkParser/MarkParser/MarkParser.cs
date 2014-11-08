@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MarkToHtml
@@ -56,35 +57,16 @@ namespace MarkToHtml
 
     public class MarkParser
     {
-        public static string[] DividesIntoParagraphs(string text)
+        public static string[] DivideIntoParagraphs(string text)
         {
-            var ans = new List<String>();
-            int start = 0;
-            int end = 0;
-            for (int i = 1; i < text.Length; i++)
-            {
-                if (text[i] == '\n' && text[i - 1] == '\n')
-                {
-                    end = i - 2;
-                    if (start < end)
-                        ans.Add(text.Substring(start, end - start + 1));
-                    else
-                        ans.Add("");
-                    start = i + 1;
-                    i++;
-                }
-            }
-            end = text.Length - 1;
-            if (start < end)
-                ans.Add(text.Substring(start, end - start + 1));
-            else
-                ans.Add("");
-            return ans.ToArray();
+            var reg = new Regex(@"(\r)?\n\s*(\r)?\n");
+            var textWithoutBlunks = reg.Replace(text, "\n\n");
+            return textWithoutBlunks.Split(new string[] {"\n\n"}, StringSplitOptions.RemoveEmptyEntries).ToArray();
         }
 
         public static string Parse(string text)
         {
-            var paragraphs = DividesIntoParagraphs(text)
+            var paragraphs = DivideIntoParagraphs(text)
                 .Select(x => new Paragraph(x))
                 .ToArray();
             var answer = new StringBuilder();
