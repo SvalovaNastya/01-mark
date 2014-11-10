@@ -31,4 +31,28 @@ namespace MarkToHtml
             Assert.AreEqual("<SomeTag>aa\na</SomeTag>", text.ToHtmlString());
         }
     }
+
+    class SimpleTextClass
+    {
+        [Test]
+        public static void ToHtmlStringTest_SpaceText()
+        {
+            var text = new SimpleText("    ");
+            Assert.AreEqual("    ", text.ToHtmlString());
+        }
+
+        [Test]
+        public static void ToHtmlStringTest_SimpleText()
+        {
+            var text = new SimpleText("aaa");
+            Assert.AreEqual("aaa", text.ToHtmlString());
+        }
+
+        [Test]
+        public static void ToHtmlStringTest_MultilineText()
+        {
+            var text = new SimpleText("aa\na");
+            Assert.AreEqual("aa\na", text.ToHtmlString());
+        }
+    }
 }

@@ -9,7 +9,7 @@ namespace MarkToHtml
 {
     public interface ITextWithProperty
     {
-        string Text { get; set; }
+        string Text { get; }
 
         string ToHtmlString();
     }

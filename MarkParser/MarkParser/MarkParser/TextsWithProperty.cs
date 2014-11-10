@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.Eventing.Reader;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MarkToHtml
 {
     public class TaggedText : ITextWithProperty
     {
-        public string Text { get; set; }
-        public string Tag { get; set; }
+        public string Tag { get; private set; }
+        public string Text { get; private set; }
 
         public TaggedText(string text, string tag)
         {
-            this.Tag = tag;
-            this.Text = text;
+            Tag = tag;
+            Text = text;
         }
 
         public string ToHtmlString()
@@ -29,11 +27,16 @@ namespace MarkToHtml
 
     public class SimpleText : ITextWithProperty
     {
-        public string Text { get; set; }
+        public string Text { get; private set; }
+
+        public SimpleText(string text)
+        {
+            this.Text = text;
+        }
 
         public string ToHtmlString()
         {
-            throw new NotImplementedException();
+            return Text;
         }
     }
 }
