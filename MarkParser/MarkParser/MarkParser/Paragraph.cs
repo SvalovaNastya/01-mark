@@ -8,16 +8,16 @@ namespace MarkToHtml
 {
     public class Paragraph
     {
-        public List<TaggedText> TaggedTextsList { get; set; }
+        public List<ITextWithProperty> TaggedTextsList { get; private set; }
 
         public Paragraph(string rawText)
         {
             TaggedTextsList = ParseParagraph(rawText);
         }
 
-        public List<TaggedText> ParseParagraph(string text)
+        private List<ITextWithProperty> ParseParagraph(string text)
         {
-            return new List<TaggedText>() { new TaggedText(text, null) };
+            return new List<ITextWithProperty>() { new SimpleText(text) };
         }
 
         public string ToHtmlString()
