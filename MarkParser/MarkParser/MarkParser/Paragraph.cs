@@ -17,7 +17,10 @@ namespace MarkToHtml
 
         private List<ITextWithProperty> ParseParagraph(string text)
         {
-            return new List<ITextWithProperty>() { new SimpleText(text) };
+            return new List<ITextWithProperty>()
+            {
+                new SimpleText(text)
+            };
         }
 
         public string ToHtmlString()

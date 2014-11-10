@@ -23,6 +23,14 @@ namespace MarkToHtml
             s.Append("</" + Tag + ">");
             return s.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != typeof (TaggedText))
+                return false;
+            var TTObj = (TaggedText) obj;
+            return TTObj.Text == Text && TTObj.Tag == Tag;
+        }
     }
 
     public class SimpleText : ITextWithProperty
@@ -37,6 +45,14 @@ namespace MarkToHtml
         public string ToHtmlString()
         {
             return Text;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != typeof(SimpleText))
+                return false;
+            var TTObj = (SimpleText)obj;
+            return TTObj.Text == Text;
         }
     }
 }
