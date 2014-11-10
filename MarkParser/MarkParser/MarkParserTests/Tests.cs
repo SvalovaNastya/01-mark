@@ -48,11 +48,11 @@ namespace MarkToHtml
             Assert.AreEqual("<p>\naaa\n</p>\n<p>\nbbb\n</p>\n<p>\nmmm\n</p>", result);
         }
 
-//        [Test]
-//        public static void DividesIntoParagrafsWithEmptyString()
-//        {
-//            var result = MarkParser.Parse("aaa\n\n\n\nmmm");
-//            Assert.AreEqual("<p>\naaa\n</p>\n<p>\n\n</p>\n<p>\nmmm\n</p>", result);
-//        }
+        [Test]
+        public static void DividesIntoParagrafsWithEmptyString()
+        {
+            var result = MarkParser.Parse("aaa\n\n\n\nmmm");
+            Assert.AreEqual("<p>\naaa\n</p>\n<p>\nmmm\n</p>", result);
+        }
     }
 }

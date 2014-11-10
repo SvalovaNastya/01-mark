@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkParser", "MarkParser\MarkParser.csproj", "{5C3056C1-311C-4D8B-8BE6-190239555EC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkToHtml", "MarkParser\MarkToHtml.csproj", "{5C3056C1-311C-4D8B-8BE6-190239555EC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkParserTests", "MarkParserTests\MarkParserTests.csproj", "{566F197C-87EF-45F6-B66E-26C3769A4E07}"
 EndProject

@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TaggedTextTests.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,9 +56,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MarkParser\MarkParser.csproj">
+    <ProjectReference Include="..\MarkParser\MarkToHtml.csproj">
       <Project>{5c3056c1-311c-4d8b-8be6-190239555ec5}</Project>
-      <Name>MarkParser</Name>
+      <Name>MarkToHtml</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

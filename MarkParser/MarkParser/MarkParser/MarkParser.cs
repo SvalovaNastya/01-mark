@@ -7,29 +7,6 @@ using System.Threading.Tasks;
 
 namespace MarkToHtml
 {
-    public class TaggedText
-    {
-        public string Text { get; set; }
-        public string Tag { get; set; }
-
-        public TaggedText(string text, string tag)
-        {
-            this.Tag = tag;
-            this.Text = text;
-        }
-
-        public string ToHtmlString()
-        {
-            if (Tag == null)
-                return Text;
-            var s = new StringBuilder();
-            s.Append("<" + Tag + ">");
-            s.Append(Text);
-            s.Append("</" + Tag + ">");
-            return s.ToString();
-        }
-    }
-
     public class Paragraph
     {
         public List<TaggedText> TaggedTextsList { get; set; }
@@ -69,6 +46,11 @@ namespace MarkToHtml
             var paragraphs = DivideIntoParagraphs(text)
                 .Select(x => new Paragraph(x))
                 .ToArray();
+            if (paragraphs.Length == 0)
+            {
+                paragraphs = new Paragraph[1];
+                paragraphs[0] = new Paragraph("");
+            }
             var answer = new StringBuilder();
             foreach (var paragraph in paragraphs)
             {
