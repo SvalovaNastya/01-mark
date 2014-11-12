@@ -156,6 +156,27 @@ namespace MarkToHtml
                     new SimpleText("! a")
                 }
             },
+            new object[]
+            {
+                "a a_a_a a", new List<ITextWithProperty>
+                {
+                    new SimpleText("a a_a_a a")
+                }
+            },
+            new object[]
+            {
+                "a \\__aa__ a", new List<ITextWithProperty>
+                {
+                    new SimpleText("a \\__aa__ a")
+                }
+            },
+            new object[]
+            {
+                "a \\_aa__ a", new List<ITextWithProperty>
+                {
+                    new SimpleText("a \\_aa__ a")
+                }
+            },
 //            new object[]
 //            {
 //                "a,__a a__! a _aa_ ", new List<ITextWithProperty>
