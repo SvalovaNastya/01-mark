@@ -177,28 +177,28 @@ namespace MarkToHtml
                     new SimpleText("a \\_aa__ a")
                 }
             },
-//            new object[]
-//            {
-//                "a,__a a__! a _aa_ ", new List<ITextWithProperty>
-//                {
-//                    new SimpleText("a,"),
-//                    new TaggedText("a a", "strong"),
-//                    new SimpleText("! a "),
-//                    new TaggedText("aa", "em"),
-//                    new SimpleText(" ")
-//                }
-//            },
-//            new object[]
-//            {
-//                "a _aaa_ aa __a__ a", new List<ITextWithProperty>
-//                {
-//                    new SimpleText("a "),
-//                    new TaggedText("aaa", "em"),
-//                    new SimpleText(" aa "),
-//                    new TaggedText("aaa", "strong"),
-//                    new SimpleText(" a")
-//                }
-//            },
+            new object[]
+            {
+                "a,__a a__! a ,_aa_? ", new List<ITextWithProperty>
+                {
+                    new SimpleText("a,"),
+                    new TaggedText("a a", "strong"),
+                    new SimpleText("! a ,"),
+                    new TaggedText("aa", "em"),
+                    new SimpleText("? ")
+                }
+            },
+            new object[]
+            {
+                "a _aaa_ aa __a__ a", new List<ITextWithProperty>
+                {
+                    new SimpleText("a "),
+                    new TaggedText("aaa", "em"),
+                    new SimpleText(" aa "),
+                    new TaggedText("a", "strong"),
+                    new SimpleText(" a")
+                }
+            },
         };
     }
 }

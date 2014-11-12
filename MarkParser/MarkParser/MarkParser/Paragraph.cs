@@ -20,7 +20,7 @@ namespace MarkToHtml
         private List<ITextWithProperty> ParseParagraph(string text)
         {
             text = text + "\0";
-            string simpleText = @"^((.*[ ,])(_))+?";
+            string simpleText = @"^((.*?[ ,])(_))+?";
             string emText = @"^_([\W\w]+?)_((\W)|\0)";
             string strongText = @"^__([\W\w]+?)__((\W)|\0)";
             var simpleTextRgx = new Regex(simpleText);
@@ -31,15 +31,7 @@ namespace MarkToHtml
             var previousLength = text.Length;
             while (text.Length > 1)
             {
-                var currentTextWithProperty = Regex.Match(text, simpleText);
-                if (currentTextWithProperty.Length != 0)
-                {
-                    ansText = currentTextWithProperty.Groups[2].ToString();
-                    text = simpleTextRgx.Replace(text, currentTextWithProperty.Groups[3].ToString());
-                    ans.Add(new SimpleText(ansText));
-                    continue;
-                }
-                currentTextWithProperty = Regex.Match(text, strongText);
+                var currentTextWithProperty = Regex.Match(text, strongText);
                 if (currentTextWithProperty.Length != 0)
                 {
                     ansText = currentTextWithProperty.Groups[1].ToString();
@@ -53,6 +45,14 @@ namespace MarkToHtml
                     ansText = currentTextWithProperty.Groups[1].ToString();
                     text = emTextRgx.Replace(text, currentTextWithProperty.Groups[2].ToString());
                     ans.Add(new TaggedText(ansText, "em"));
+                    continue;
+                }
+                currentTextWithProperty = Regex.Match(text, simpleText);
+                if (currentTextWithProperty.Length != 0)
+                {
+                    ansText = currentTextWithProperty.Groups[2].ToString();
+                    text = simpleTextRgx.Replace(text, currentTextWithProperty.Groups[3].ToString());
+                    ans.Add(new SimpleText(ansText));
                     continue;
                 }
                 if (previousLength == text.Length)
