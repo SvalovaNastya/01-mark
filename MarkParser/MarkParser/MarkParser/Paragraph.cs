@@ -22,8 +22,10 @@ namespace MarkToHtml
             text = text + "\0";
             string simpleText = @"^((.*[ ,])(_))+?";
             string emText = @"^_([\W\w]+?)_((\W)|\0)";
+            string strongText = @"^__([\W\w]+?)__((\W)|\0)";
             var simpleTextRgx = new Regex(simpleText);
             var emTextRgx = new Regex(emText);
+            var strongTextExp = new Regex(strongText);
             var ansText = text;
             var ans = new List<ITextWithProperty>();
             var previousLength = text.Length;
@@ -37,11 +39,19 @@ namespace MarkToHtml
                     ans.Add(new SimpleText(ansText));
                     continue;
                 }
-                var newcurrentTextWithProperty = Regex.Match(text, emText);
-                if (newcurrentTextWithProperty.Length != 0)
+                currentTextWithProperty = Regex.Match(text, strongText);
+                if (currentTextWithProperty.Length != 0)
                 {
-                    ansText = newcurrentTextWithProperty.Groups[1].ToString();
-                    text = emTextRgx.Replace(text, newcurrentTextWithProperty.Groups[2].ToString());
+                    ansText = currentTextWithProperty.Groups[1].ToString();
+                    text = strongTextExp.Replace(text, currentTextWithProperty.Groups[2].ToString());
+                    ans.Add(new TaggedText(ansText, "strong"));
+                    continue;
+                }
+                currentTextWithProperty = Regex.Match(text, emText);
+                if (currentTextWithProperty.Length != 0)
+                {
+                    ansText = currentTextWithProperty.Groups[1].ToString();
+                    text = emTextRgx.Replace(text, currentTextWithProperty.Groups[2].ToString());
                     ans.Add(new TaggedText(ansText, "em"));
                     continue;
                 }

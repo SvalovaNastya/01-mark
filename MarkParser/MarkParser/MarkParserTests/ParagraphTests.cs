@@ -61,7 +61,7 @@ namespace MarkToHtml
         }
 
         [Test, TestCaseSource("ParseLines")]
-        public static void CorrectTranslateToHtmlStringTest_TextWithEmTag(string text, List<ITextWithProperty> ans)
+        public static void CorrectTranslateToHtmlStringTest_TextWithTags(string text, List<ITextWithProperty> ans)
         {
             var paragraph = new Paragraph(text);
             Assert.IsTrue(CompareLists(ans, paragraph.TaggedTextsList));
@@ -130,13 +130,41 @@ namespace MarkToHtml
                     new SimpleText("!")
                 }
             },
+            new object[]
+            {
+                "a __a__ a", new List<ITextWithProperty>
+                {
+                    new SimpleText("a "),
+                    new TaggedText("a", "strong"),
+                    new SimpleText(" a")
+                }
+            },
+            new object[]
+            {
+                "__a a__ a", new List<ITextWithProperty>
+                {
+                    new TaggedText("a a", "strong"),
+                    new SimpleText(" a")
+                }
+            },
+            new object[]
+            {
+                "a,__a a__! a", new List<ITextWithProperty>
+                {
+                    new SimpleText("a,"),
+                    new TaggedText("a a", "strong"),
+                    new SimpleText("! a")
+                }
+            },
 //            new object[]
 //            {
-//                "a __a__ a", new List<ITextWithProperty>
+//                "a,__a a__! a _aa_ ", new List<ITextWithProperty>
 //                {
-//                    new SimpleText("a "),
-//                    new TaggedText("a", "strong"),
-//                    new SimpleText(" a")
+//                    new SimpleText("a,"),
+//                    new TaggedText("a a", "strong"),
+//                    new SimpleText("! a "),
+//                    new TaggedText("aa", "em"),
+//                    new SimpleText(" ")
 //                }
 //            },
 //            new object[]
