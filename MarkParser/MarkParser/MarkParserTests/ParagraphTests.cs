@@ -52,7 +52,7 @@ namespace MarkToHtml
             if (list1.Count == list2.Count)
             {
                 for (int i = 0; i < list1.Count; i++)
-                    if (list1[i].Equals(list2[i]))
+                    if (!list1[i].Equals(list2[i]))
                         return false;
             }
             else
@@ -80,10 +80,10 @@ namespace MarkToHtml
             },
             new object[]
             {
-                "a __a__ a", new List<ITextWithProperty>
+                "a,_a_ a", new List<ITextWithProperty>
                 {
-                    new SimpleText("a "),
-                    new TaggedText("a", "strong"),
+                    new SimpleText("a,"),
+                    new TaggedText("a", "em"),
                     new SimpleText(" a")
                 }
             },
@@ -98,15 +98,58 @@ namespace MarkToHtml
             },
             new object[]
             {
-                "a _aaa_ aa __a__ a", new List<ITextWithProperty>
+                "a _a a_ a", new List<ITextWithProperty>
                 {
                     new SimpleText("a "),
-                    new TaggedText("aaa", "em"),
-                    new SimpleText(" aa "),
-                    new TaggedText("aaa", "strong"),
+                    new TaggedText("a a", "em"),
                     new SimpleText(" a")
                 }
             },
+            new object[]
+            {
+                "_a_ a", new List<ITextWithProperty>
+                {
+                    new TaggedText("a", "em"),
+                    new SimpleText(" a")
+                }
+            },
+            new object[]
+            {
+                "a _a_", new List<ITextWithProperty>
+                {
+                    new SimpleText("a "),
+                    new TaggedText("a", "em")
+                }
+            },
+            new object[]
+            {
+                "a _a_!", new List<ITextWithProperty>
+                {
+                    new SimpleText("a "),
+                    new TaggedText("a", "em"),
+                    new SimpleText("!")
+                }
+            },
+//            new object[]
+//            {
+//                "a __a__ a", new List<ITextWithProperty>
+//                {
+//                    new SimpleText("a "),
+//                    new TaggedText("a", "strong"),
+//                    new SimpleText(" a")
+//                }
+//            },
+//            new object[]
+//            {
+//                "a _aaa_ aa __a__ a", new List<ITextWithProperty>
+//                {
+//                    new SimpleText("a "),
+//                    new TaggedText("aaa", "em"),
+//                    new SimpleText(" aa "),
+//                    new TaggedText("aaa", "strong"),
+//                    new SimpleText(" a")
+//                }
+//            },
         };
     }
 }
