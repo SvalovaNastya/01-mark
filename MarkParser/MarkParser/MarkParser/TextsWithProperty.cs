@@ -4,22 +4,32 @@ using System.Text;
 
 namespace MarkToHtml
 {
+    public enum PositionOfTags
+    {
+        end, 
+        start,
+        startAndEnd
+    }
     public class TaggedText : ITextWithProperty
     {
         public string Tag { get; private set; }
         public string Text { get; private set; }
+        public PositionOfTags Position { get; private set; }
 
-        public TaggedText(string text, string tag)
+        public TaggedText(string text, string tag, PositionOfTags postion)
         {
             Tag = tag;
             Text = text;
+            Position = postion;
         }
 
         public string ToHtmlString()
         {
             var s = new StringBuilder();
-            s.Append("<" + Tag + ">");
+            if (Position != PositionOfTags.end)
+                s.Append("<" + Tag + ">");
             s.Append(Text);
+            if (Position != PositionOfTags.start)
             s.Append("</" + Tag + ">");
             return s.ToString();
         }
@@ -36,6 +46,7 @@ namespace MarkToHtml
     public class SimpleText : ITextWithProperty
     {
         public string Text { get; private set; }
+        public ITextWithProperty ListOfElemenst { get; private set; }
 
         public SimpleText(string text)
         {

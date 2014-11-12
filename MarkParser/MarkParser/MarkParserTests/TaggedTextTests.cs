@@ -13,21 +13,21 @@ namespace MarkToHtml
         [Test]
         public static void ToHtmlStringTest_SpaceText()
         {
-            var text = new TaggedText("    ", "SomeTag");
+            var text = new TaggedText("    ", "SomeTag", PositionOfTags.startAndEnd);
             Assert.AreEqual("<SomeTag>    </SomeTag>", text.ToHtmlString());
         }
 
         [Test]
         public static void ToHtmlStringTest_SimpleText()
         {
-            var text = new TaggedText("aaa", "SomeTag");
+            var text = new TaggedText("aaa", "SomeTag", PositionOfTags.startAndEnd);
             Assert.AreEqual("<SomeTag>aaa</SomeTag>", text.ToHtmlString());
         }
 
         [Test]
         public static void ToHtmlStringTest_MultilineText()
         {
-            var text = new TaggedText("aa\na", "SomeTag");
+            var text = new TaggedText("aa\na", "SomeTag", PositionOfTags.startAndEnd);
             Assert.AreEqual("<SomeTag>aa\na</SomeTag>", text.ToHtmlString());
         }
     }
